@@ -1,0 +1,18 @@
+.login-container{
+
+  width:70%;
+  margin:3rem auto 0 auto;
+  background-color: aliceblue;
+  text-align: center;
+  padding-bottom:0.05rem;
+  box-shadow: 1px 1px 1px   12px rgba(207, 205, 205, 0.473);
+    border-radius: 4px;
+}
+
+
+input[type=email]:focus{
+  /* box-shadow: 2px 2px blue; */
+  /* box-sizing: border-box; */
+   /* border: 1px  solid rgb(26, 108, 250);  */
+  
+}

@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import {Routes,Route, BrowserRouter} from 'react-router-dom'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Home from './pages/Home.js/Home';
+import Login from './pages/Login/Login';
+import SetAvatar from './pages/Set Avatar/SetAvatar';
+import SignUp from './pages/SignUp/SignUp';
+import Chat from './pages/Chat/Chat'
+
+// import socketClient  from "socket.io-client";
+// const SERVER = "http://127.0.0.1:3000";
+
+import socketIO from 'socket.io-client';
+
+
+
 
 function App() {
+
+//   var socket = socketClient (SERVER);
+//   socket.on('connection', () => {
+//     console.log(`I'm connected with the back-end`);
+// });
+
+const socket = socketIO.connect('http://localhost:5000');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+    <Routes>
+      <Route path='/' element={<Home/>}/>
+      <Route path='/signUp' element={<SignUp/>}/>
+      <Route path='/login' element={<Login socket={socket} />}/>
+      <Route path='/setAvatar' element={<SetAvatar  socket={socket} />}/>
+      <Route path='/chat' element={<Chat socket={socket} />}/>
+    </Routes>
+    <ToastContainer/>
+    </BrowserRouter>
   );
 }
 

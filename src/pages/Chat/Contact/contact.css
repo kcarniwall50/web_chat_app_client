@@ -1,0 +1,81 @@
+.contact-container{
+  background-color: rgb(176, 180, 176);
+  height:100vh;
+  text-align: center;
+  display:grid;
+  grid-template-rows: 10vh 73vh 17vh;
+  /* gap:1rem; */
+ 
+}
+.user-icon{
+  display:inline-flex;
+ 
+  /* justify-content: center; */
+  align-items: center;
+  padding:0.2rem;
+  margin:0.1rem 0;
+  background-color: rgb(102, 166, 244);
+width:100%;
+border-radius: 5px;
+cursor: pointer;
+
+
+}
+
+
+
+.users-scrollbar{
+  max-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+}
+
+
+
+.user-icon>img{
+  width: 17%;
+  margin-right:0.3rem ;
+}
+
+.user-icon:hover{
+  background-color: rgb(235, 242, 240);
+}
+
+
+.currentUser-icon{
+ 
+  /* background-color: rgb(242, 136, 203); */
+  display:flex;
+ 
+  justify-content:end;
+  align-items: center;
+  margin-right: 0.5rem;
+
+}
+
+.currentUser-icon>img{
+  width:30%;
+ 
+  border-radius: 50%;
+  background-color: rgb(242, 136, 203);
+  padding:0.3rem;
+  overflow: hidden;
+}
+
+.currentUser-icon>p{
+  margin-left: 0.5rem;
+}
+
+
+.user-icon:focus{
+  background-color: rgb(176, 55, 247);
+  color:white;
+ 
+}
+
+.activeDiv{
+  background-color: rgb(176, 55, 247);
+  color:white;
+ 
+}

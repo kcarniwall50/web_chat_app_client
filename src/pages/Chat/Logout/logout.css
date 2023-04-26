@@ -1,0 +1,29 @@
+
+.logout-container{
+  background-color: blueviolet;
+  display:grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.logout-btn{
+  background-color: rgb(250, 154, 38);
+  padding:0.2rem;
+  border-radius: 4px;
+  margin-inline: 1rem;
+  cursor: pointer;
+  color:white;
+ 
+
+}
+
+.logout-avatar{
+  display:flex;
+  gap:0.5rem;
+  align-items: center;
+  padding: 0.2rem;
+ 
+}

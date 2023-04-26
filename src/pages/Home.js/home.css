@@ -1,0 +1,49 @@
+
+
+.home-container{
+  width:100%;
+  width:fit-content;
+  /* height:100%; */
+  margin:0;
+  /* padding:0.4rem; */
+  background-color: rgb(232, 232, 130);
+ 
+}
+
+.home-img{
+   width:100%;
+    /* margin-inline:1rem; */
+    margin-inline: auto; 
+  
+}
+
+.links{
+  text-align:center;
+   margin:1rem;
+   padding: 1rem;
+}
+
+.home-signup{
+  margin-right: 2rem;
+padding:0.4rem;
+font-size: 1.2rem;
+background-color: rgb(238, 238, 156);
+border-radius: 5px;
+}
+
+.home-login{
+  margin-left:2rem;
+  padding: 0.4rem;
+  color:rgb(0, 0, 0);
+font-size: 1.2rem;
+background-color: rgb(238, 238, 156);
+border-radius: 5px;
+}
+
+.home-login:hover{
+  background-color: beige;
+}
+
+.home-signup:hover{
+  background-color: beige;
+}
