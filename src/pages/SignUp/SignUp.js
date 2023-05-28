@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { FaUserPlus } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
 import "./signUp.css";
 
-const backend_url = process.env.Backend_URL;
+const backend_url = process.env.REACT_APP_BACKEND_URL;
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -15,12 +15,14 @@ const SignUp = () => {
     password: "",
     confiremPassword: "",
   });
+
+  const navigate = useNavigate();
+
   const { name, email, password, confiremPassword } = formData;
 
   const inputChangeHandler = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // console.log(formData)
   };
 
   const formSubmit = async (e) => {
@@ -40,24 +42,21 @@ const SignUp = () => {
     }
 
     //  calling api
-    // console.log("form", formData, "kk")
 
     try {
       const response = await axios.post(
         `${backend_url}/api/user/register`,
         formData
       );
-      console.log("res", response, "..");
-      console.log("res", response.cookie, "..");
       if (response.status === 201) {
         toast.success("Registered Successfully");
+        navigate("/login");
       }
-      // console.log("kk", action, "..")
       if (response.status === 200) {
         toast.error("User already registered");
       }
     } catch (error) {
-      console.log("errrr", error, "...");
+      console.log("errrr", error);
     }
   };
 
@@ -86,7 +85,6 @@ const SignUp = () => {
             value={email}
             onChange={inputChangeHandler}
           />
-          {/* placeholder=" &#xf2b9; f007; &#xf16a; fa-youtube-play  enter email" */}
         </div>
         <div className="signUp-inputs-container">
           <input
@@ -113,10 +111,8 @@ const SignUp = () => {
         <div className="signUp-inputs-container">
           <input className="signup-inputs" type="submit" value="SignUp" />
         </div>
-        {/* Login </input>  */}
       </form>
       <div style={{ display: "block", marginBottom: "1.5rem" }}>
-        {/* not working styling why ???  */}
         <div>
           <code>
             <small>Already have account?</small>

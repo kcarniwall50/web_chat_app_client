@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./chatContent.css";
-import axios from "axios";
-
 import socketClient from "socket.io-client";
-const SERVER = process.env.Backend_URL;
+const SERVER = process.env.REACT_APP_BACKEND_URL;
 var socket = socketClient(SERVER);
 
 const ChatContent = ({ setTypingStatus }) => {
@@ -19,79 +17,36 @@ const ChatContent = ({ setTypingStatus }) => {
 
   const date = Date.now();
 
-  console.log("chat content rendered");
   const [receivedMessage, setReceivedMessage] = useState([]);
 
-  const [allChats, setAllChats] = useState([]);
-
   const scrollNew = useRef();
-  // const scrollOld = useRef();
-
-  let allMessages = [];
 
   const loginUserId = JSON.parse(localStorage.getItem("loginUserId"));
-  // console.log(loginUserId)
 
   useEffect(() => {
+    socket.on("newUserResponse", (data) => {
+      if (data.userId === JSON.parse(localStorage.getItem("loginUserId"))) {
+        setReceivedMessage((state) => [...state, "You Joined"]);
+      } else {
+        setReceivedMessage((state) => [...state, `${data.userName}  Joined`]);
+      }
+    });
+
+    socket.on("user-disconnected", (dropedUser) => {
+      setReceivedMessage((state) => [...state, `${dropedUser} disconnected`]);
+    });
+
     socket.on("typingResponse", (data) => setTypingStatus(data));
 
     socket.on("typingResponseEnd", (data) => setTypingStatus(""));
 
     socket.on("chat-message", (newMessage) => {
-      // console.log(newMessage, "oo");
-      // console.log(receivedMessage, "pp")
       setReceivedMessage((state) => [...state, newMessage]);
-      // console.log(...receivedMessage)
     });
   }, [socket]);
-
-  let isUser = "";
-
-  const [newUser, setNewUser] = useState();
-
-  useEffect(() => {
-    socket.on("newUserResponse", (data) => {
-      // console.log("oo",data,  "ll")
-      if (data.userId === JSON.parse(localStorage.getItem("loginUserId"))) {
-        setNewUser("You Joined");
-        // setReceivedMessage((state) => [...state, "you Joined"]);
-      } else {
-        setNewUser(`${data.userName}  Joined`);
-        // setReceivedMessage((state) => [...state, `${data.userName} joined`]);
-      }
-    });
-
-    socket.on("user-disconnected", (disconnectedUser) => {
-      console.log("disconnected user", `${disconnectedUser}`, "...");
-
-      setReceivedMessage((state) => [...state, disconnectedUser]);
-    });
-  }, [socket]);
-
-  // chat history
-  useEffect(() => {
-    const getAllChats = async () => {
-      try {
-        const response = await axios.get(`${SERVER}/getAllChats`, {
-          withCredentials: true,
-        });
-        // console.log(response.data);
-        setAllChats(response.data.message);
-        allMessages = response.data.message;
-        // console.log("kk",typeof(allChats[1].users.sender),"ll")
-        // console.log("pp",chatUserAvatar,"oo")
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    getAllChats();
-  }, []);
 
   useEffect(() => {
     scrollNew.current?.scrollIntoView({ behavior: "smooth" });
-    //  scrollNew.current.scrollIntoView(true); // false
-    // scrollOld.current.scrollIntoView(false);
   }, [receivedMessage]);
 
   const time = () => {
@@ -119,55 +74,46 @@ const ChatContent = ({ setTypingStatus }) => {
       <div className="chat-messages">
         {receivedMessage?.map((message, index) => (
           <div key={index} ref={scrollNew}>
-            <div
-              className={`message ${
-                message?.senderId === loginUserId ? "sended" : "recieved"
-              }`}
-            >
+            {message.message === undefined ? (
+              <p
+                style={{
+                  textAlign: "center",
+                  width: "160px",
+                  backgroundColor: "grey",
+                  color: "white",
+                  marginInline: "auto",
+                  padding: "0.2rem",
+                  borderRadius: "4px",
+                  
+                }}
+              >
+                {message}&nbsp;{<small style={{fontSize:'8px'}} >{time()}</small>}
+              </p>
+            ) : (
               <div
-                className={`content ${
-                  message?.senderId === loginUserId ? "back1" : "back2"
+                className={`message ${
+                  message?.senderId === loginUserId ? "sended" : "recieved"
                 }`}
               >
-                <p
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    fontSize: "9px",
-                    margin: "0.2rem",
-                    color: "blue",
-                  }}
+                <div
+                  className={`content ${
+                    message?.senderId === loginUserId ? "back1" : "back2"
+                  }`}
                 >
-                  {" "}
-                  {message?.senderId === loginUserId ? (
-                    <span>You</span>
-                  ) : (
-                    <span>{message?.senderName}</span>
-                  )}{" "}
-                </p>
+                  <p className="your-message">
+                    {message?.senderId === loginUserId ? (
+                      <span>You</span>
+                    ) : (
+                      <span>{message?.senderName}</span>
+                    )}{" "}
+                  </p>
 
-                <p className="text">{message?.message}</p>
+                  <p className="text">{message?.message}</p>
 
-                <p
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    fontSize: "8px",
-                    padding: "0.2rem",
-                    color: "grey",
-                  }}
-                >
-                  {" "}
-                  {time()}
-                </p>
+                  <p className="others-message"> {time()}</p>
+                </div>
               </div>
-            </div>
-            {/* <code style={{ fontSize: "10px" }}>
-              <small>you</small>
-            </code> */}
-            {index === 0 && <p style={{ textAlign: "center" }}>{newUser}</p>}
+            )}
           </div>
         ))}
       </div>

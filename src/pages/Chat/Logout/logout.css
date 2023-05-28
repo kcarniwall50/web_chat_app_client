@@ -1,29 +1,29 @@
-
-.logout-container{
-  background-color: blueviolet;
-  display:grid;
-  grid-template-columns: 1fr 2fr 1fr;
+.logout-container {
+  background-color: rgb(250, 250, 78);
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  overflow: hidden;
   margin-bottom: 0.5rem;
+  padding-inline: 1%;
 }
 
-.logout-btn{
+.logout-btn {
   background-color: rgb(250, 154, 38);
-  padding:0.2rem;
+  padding: 0.3rem;
+  border: 1px solid transparent;
   border-radius: 4px;
-  margin-inline: 1rem;
   cursor: pointer;
-  color:white;
- 
-
+  color: white;
 }
 
-.logout-avatar{
-  display:flex;
-  gap:0.5rem;
+.logout-btn:hover {
+  color: blue;
+}
+
+.logout-avatar {
+  display: flex;
+  gap: 0.5rem;
   align-items: center;
   padding: 0.2rem;
- 
+  width: 20%;
 }

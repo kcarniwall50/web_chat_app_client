@@ -1,32 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./setAvatar.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-const backend_url = process.env.Backend_URL;
+const backend_url = process.env.REACT_APP_BACKEND_URL;
 
 const SetAvatar = ({ socket }) => {
   const navigate = useNavigate();
-  const isLogin = JSON.parse(localStorage.getItem("isLogin"));
 
-  useEffect(() => {
-    if (isLogin) {
-      navigate("/chat");
-    } else {
-      navigate("/login");
-    }
-  });
-
-  // Setting up the initial states using react hook 'useState'
   const [sprite, setSprite] = useState("bottts");
   const [seed, setSeed] = useState(1000);
 
-  // Function to set the current sprite type
   function handleSprite(spritetype) {
     setSprite(spritetype);
   }
 
-  // Function to generate random seeds for the API
   function handleGenerate() {
     let x = Math.floor(Math.random() * 1000);
     setSeed(x);
@@ -41,7 +29,6 @@ const SetAvatar = ({ socket }) => {
         { URL: avatarURL },
         { withCredentials: true }
       );
-      console.log("kp", res.data, "pp");
       if (res.status === 201) {
         toast.success("Avatar saved successfully");
       }
@@ -64,7 +51,7 @@ const SetAvatar = ({ socket }) => {
   };
 
   return (
-    <div className="container">
+    <div className="avatar-container">
       <h2 style={{ textAlign: "center", color: "blue", margin: "0.5rem 0" }}>
         Select Your Profile Avatar
       </h2>
@@ -72,7 +59,7 @@ const SetAvatar = ({ socket }) => {
         <h4>Random Avatar Generator</h4>
       </div>
       <div className="home">
-        <bold style={{ fontSize: "18px" }}>Choose category of your Avatar</bold>
+        <h4 style={{textAlign:'center'}} >Choose category of your Avatar</h4>
         <div className="btns">
           <button
             onClick={() => {
@@ -144,14 +131,8 @@ const SetAvatar = ({ socket }) => {
             Next
           </button>
         </div>
-        <input
-          style={{
-            padding: "0.2rem",
-            margin: "0.5rem 0",
-            width: "20%",
-            color: "",
-            fontSize: "20px",
-          }}
+        <input className="save-btn-avatar"
+          
           type="button"
           value="Save"
           onClick={ProfileAvatar}

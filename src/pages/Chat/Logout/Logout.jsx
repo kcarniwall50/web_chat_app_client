@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./logout.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { SET_LOGOUT } from "../../../RTK/state";
 
 const Logout = ({ chatUserAvatar, typingStatus }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const loginUserId = JSON.parse(localStorage.getItem("loginUserId"));
 
-  const [url, setUrl] = useState(JSON.parse(localStorage.getItem("userPair")));
-
   const logout = () => {
-    localStorage.setItem("isLogin", false);
+    dispatch(SET_LOGOUT())
 
     navigate("/");
   };
@@ -17,14 +18,13 @@ const Logout = ({ chatUserAvatar, typingStatus }) => {
   return (
     <div className="logout-container">
       <div className="logout-avatar">
-        <img src={chatUserAvatar.avatar} style={{ width: "32%" }} />
+        <img src={chatUserAvatar.avatar} style={{ width: "32%" }} alt='' />
         <p>{chatUserAvatar.name}</p>
       </div>
 
       <div style={{ color: "white", fontSize: "0.8rem", padding: "0.0rem" }}>
-        {/* <p>{typingStatus?.textMessage}</p> */}
         {typingStatus?.typerId !== loginUserId && (
-          <code>{typingStatus?.textMessage}</code>
+          <code style={{ color: "black" }}>{typingStatus?.textMessage}</code>
         )}
       </div>
 

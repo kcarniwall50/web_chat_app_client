@@ -1,6 +1,4 @@
-.chat-container{
+.chat-container {
   display: grid;
-  grid-template-columns:1.2fr 4fr;
-  height:100vh;
-
+  grid-template-columns: 1fr 4fr;
 }

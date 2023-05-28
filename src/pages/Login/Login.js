@@ -1,16 +1,16 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BiLogIn } from "react-icons/bi";
-import { HiOutlineMail } from "react-icons/hi";
-import { RiLockPasswordFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./login.css";
-const backend_url = process.env.Backend_URL;
+import { useDispatch } from "react-redux";
+import { SET_LOGIN } from "../../RTK/state";
+const backend_url = process.env.REACT_APP_BACKEND_URL;
 
 const Login = ({ socket }) => {
   const navigate = useNavigate();
-
+const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -20,21 +20,11 @@ const Login = ({ socket }) => {
   const inputChangeHandler = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // console.log(formData)
   };
-
-  // const isLogin = localStorage.getItem("isLogin")
-  //   ? JSON.parse(localStorage.getItem("isLogin"))
-  //   : false;
-
-  // const nameStatus = localStorage.getItem("userName")
-  //   ? JSON.parse(localStorage.getItem("userName"))
-  //   : "";
 
   const FormSubmit = async (e) => {
     e.preventDefault();
 
-    // validating incoming inputs fields
     if (!email || !password) {
       return toast.error("Fields cant be empty");
     }
@@ -47,23 +37,20 @@ const Login = ({ socket }) => {
         formData,
         { withCredentials: true }
       );
-      // console.log("res", response, "..");
 
       if (response.status === 200) {
         toast.success("Login Successfully");
       }
 
-      // localStorage.getItem("isLogin", JSON.stringify(true));
-      // localStorage.setItem("userName", JSON.stringify(response.data.name));
+ dispatch(SET_LOGIN())
 
       if (response.data.isAvatarSet) {
-        localStorage.setItem("loginUserId", JSON.stringify(response.data._id));
+        localStorage.setItem("chatLoginUserId", JSON.stringify(response.data._id));
+
         localStorage.setItem(
-          "loginUserName",
+          "chatLoginUserName",
           JSON.stringify(response.data.name)
         );
-
-        localStorage.setItem("isLogin", true);
 
         socket.emit("new-user", {
           userName: response.data.name,
@@ -72,7 +59,8 @@ const Login = ({ socket }) => {
         });
 
         return navigate("/chat");
-      } else {
+      } 
+      else {
         return navigate("/setAvatar");
       }
     } catch (e) {
@@ -84,15 +72,9 @@ const Login = ({ socket }) => {
         toast.error(e.response.data);
       }
 
-      console.log("errrr", e, "...");
+      console.log("errrr", e);
     }
   };
-
-  // useEffect(() => {
-  //   if (isLogin) {
-  //     navigate("/");
-  //   }
-  // }, [isLogin]);
 
   return (
     <div className="login-container">
@@ -100,31 +82,17 @@ const Login = ({ socket }) => {
       <h2>Login</h2>
       <form onSubmit={FormSubmit}>
         <div style={{ margin: "0.5rem 0" }}>
-          {/* <HiOutlineMail size="25"style={{ color:"blue", position:"relative", left:"1.6rem", top:"0.3rem",}} />  */}
-          {/* <FontAwesomeIcon icon="fa-solid fa-envelope" /> */}
-          <input
-            style={{
-              padding: "0.3rem",
-              fontFamily: "Arial, FontAwesome",
-              width: "40%",
-              marginInline: "auto",
-            }}
+          <input  className="login-input"
             type="email"
             placeholder="enter email"
             name="email"
             value={email}
             onChange={inputChangeHandler}
           />
-          {/* placeholder=" &#xf2b9; f007; &#xf16a; fa-youtube-play  enter email" */}
         </div>
-        <div style={{}}>
-          <input
-            style={{
-              padding: "0.3rem",
-              marginBottom: "1.5rem",
-              width: "40%",
-              marginInline: "auto",
-            }}
+        <div >
+          <input  className="login-input"
+         
             type="password"
             placeholder="enter password"
             name="password"
@@ -133,31 +101,26 @@ const Login = ({ socket }) => {
           />
         </div>
         <div style={{ display: "block", width: "100%" }}>
-          <input
-            style={{
-              padding: "0.2rem",
-              marginBottom: "1.5rem",
-              width: "40%",
-              marginInline: "auto",
-              backgroundColor: "black",
-              color: "white",
-              cursor: "pointer",
-            }}
+          <input className=" login-btn  login-input"
             type="submit"
             value="Login"
           />
         </div>
-        {/* Login </input>  */}
       </form>
-      <div style={{ display: "block", marginBottom: "1.5rem" }}>
-        {/* not working styling why ???  */}
+
+
+      <div style={{ display: "block", marginBottom: ".2rem" }}>
         <Link style={{ textDecoration: "none" }} to="/forgotPass">
           {" "}
           &nbsp;{" "}
           <code>
-            <small>Forgot Password</small>{" "}
+            <small>forgot password?</small>
           </code>
         </Link>
+        &nbsp;
+      </div>
+
+      <div style={{ display: "block", marginBottom: "1.5rem" }}>
         <code>
           <small>Don't have account?</small>
         </code>
@@ -165,7 +128,7 @@ const Login = ({ socket }) => {
           {" "}
           &nbsp;{" "}
           <code>
-            <small>SignUp</small>
+            <small>signUp</small>
           </code>
         </Link>
         &nbsp;

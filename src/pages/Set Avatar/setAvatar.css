@@ -1,82 +1,103 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Zen+Tokyo+Zoo&display=swap');
+.nav {
+  background-color: #fe8d8d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: "Zen Tokyo Zoo", cursive;
+  font-size: 25px;
+  padding: 0.1rem;
+  margin-top: 1rem;
+}
+.home {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+.avatar {
+  height: 30%;
+  width: 30%;
+  max-width: 300px;
+  max-height: 300px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.btns {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.btns > button {
+  margin: 10px;
+  font-size: 16px;
+  font-family: "Roboto Mono", monospace;
+  background-color: rgb(250, 225, 225);
+  box-shadow: 2px 3px 5px rgb(102, 101, 101);
+  border-radius: 5px;
+  border: none;
+  transition: 0.2s;
+  padding: 0.1rem;
+}
 
-.nav{
-    /* height: 9vh; */
-    /* width: 100%; */
-    background-color: #fe8d8d;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-family: 'Zen Tokyo Zoo', cursive;
-    font-size: 25px;
-    padding:0.1rem;
-    margin-top:1rem;
-}
-.home{
-    box-sizing: border-box;
-    /* height: 80vh; */
-    /* width: 100%; */
-    /* gap: 10px; */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top:1rem;
 
+.save-btn-avatar{
+    padding: 0.2rem;
+    margin: 0.5rem 0;
+    width: 70px;
+    font-size: 18px;
 }
-.avatar{
-    height: 30%;
-    width: 30%;
-    max-width: 300px;
-    max-height: 300px;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-.btns{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-}
-.btns>button{
-    /* width: 4em; */
-    /* height: 2em; */
-    margin: 10px;
-    font-size: 16px;
-    /* font-weight: 600; */
-    font-family: 'Roboto Mono', monospace;
-    background-color: rgb(250, 225, 225);
-    box-shadow: 2px 3px 5px rgb(102, 101, 101);
-    border-radius: 5px;
-    border: none;
-    transition: 0.2s;
-    padding:0.1rem;
 
-}
-.btns > button:hover{
+.btns > button:hover {
   background-color: #fc4c4ca6;
 }
 
-.btns>button:focus{
-    box-shadow: none;
-    background-color: #faa358;
-    color:whitesmoke;
-    /* font-size: 300px; */
+.btns > button:focus {
+  box-shadow: none;
+  background-color: #faa358;
+  color: whitesmoke;
 }
 
-#gen{
-    background-color: #fd4b4bdc;
-    color: white;
-    padding:0.4rem;
-    /* width:100%; */
-    text-align: center;
+#gen {
+  background-color: #fd4b4bdc;
+  color: white;
+  padding: 0.3rem;
+  text-align: center;
 }
 
-#gen:active{
+#gen:active {
   background-color: #4865f7dc;
   color: white;
   transition: 0.1s;
- 
+}
+
+@media screen and (max-width:500px) {
+  .nav{
+    font-size: 14px;
+  }
+
+  .btns>button{
+    font-size: 12px;
+
+  }
+
+  .avatar-container>h2{
+    font-size: 18px;
+  }
+
+  .save-btn-avatar{
+    font-size: 16px;
+    width:50px;
+    padding: 0.1rem;
+
+  }
+
+  .avatar{
+    width:50%;
+    height:50%;
+  }
+
 }

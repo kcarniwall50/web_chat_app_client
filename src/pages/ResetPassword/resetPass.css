@@ -1,5 +1,5 @@
-.login-container {
-  width: 70%;
+.reset-container {
+  width: 80%;
   margin: 3rem auto 0 auto;
   background-color: aliceblue;
   text-align: center;
@@ -8,36 +8,34 @@
   border-radius: 4px;
 }
 
-.login-input{
+.reset-input{
   padding: 0.2rem;
-  margin-bottom: .2rem;
+  margin: .5rem auto;
   width:50%;
-  margin-inline: auto;
 }
 
-.login-btn{
+.reset-btn{
   background-color: black;
-  margin-top: 0.8rem;
   cursor: pointer;
+  margin: 1rem 0;
   color: white;
-
 
 
 }
 
 @media screen and (max-width:500px) {
-  .login-container{
+  .reset-container{
    width:80%;
    box-shadow: 1px 1px 1px 9px rgba(207, 205, 205, 0.473);
    border-radius: 2px;
   }
-  .login-input{
+  .reset-input{
    width: 80%;
    padding: 0.1rem;
-   margin-bottom: 0.1rem;
+   margin: 0.2rem 0;
   }
 
-  .login-btn{
-    margin-top: 0.8rem;
+  .reset-btn{
+    margin: 1rem 0;
   }
 }

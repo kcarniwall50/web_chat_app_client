@@ -1,11 +1,5 @@
-.chatBox-container{
-  height:100vh;
+.chatBox-container {
   text-align: center;
-  display:grid;
-  grid-template-rows: 0.5fr 4fr 0.5fr;
-  /* gap:1rem; */
-
-
-  
-  
+  display: grid;
+  grid-template-rows: 0.4fr 4.2fr 0.4fr;
 }

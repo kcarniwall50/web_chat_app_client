@@ -3,15 +3,14 @@ import "./chatInput.css";
 import { BiSend } from "react-icons/bi";
 import EmojiPicker from "emoji-picker-react";
 import { FaSmile } from "react-icons/fa";
-import axios from "axios";
 import { toast } from "react-toastify";
 
-const backend_url = process.env.Backend_URL;
 
-const ChatInput = ({ chatUserAvatar, socket }) => {
+const ChatInput = ({ socket }) => {
   const [showEmoji, setShowEmoji] = useState(false);
   const [msg, setMsg] = useState("");
   const ref = useRef();
+  const emojiClick = useRef();
 
   const handleTyping = () => {
     const typer = {
@@ -28,9 +27,8 @@ const ChatInput = ({ chatUserAvatar, socket }) => {
 
   const sendChat = async (e) => {
     e.preventDefault();
-    // console.log(msg);
     if (msg.length < 1) {
-      return toast.error("Please enter some texts");
+      return toast.error("Please send message");
     }
 
     if (msg.length > 0) {
@@ -43,57 +41,44 @@ const ChatInput = ({ chatUserAvatar, socket }) => {
     };
     socket.emit("message", messages);
 
-    try {
-      const response = await axios.post(
-        `${backend_url}/saveMessage`,
-        { chatUserAvatar, msg },
-        { withCredentials: true }
-      );
-      console.log(response);
-    } catch (e) {
-      console.log(e);
-    }
   };
-
-  // document.addEventListener("click",()=>{
-  //   const stopTyping = () =>
-
-  // })
 
   const smileEmoji = () => {
     setShowEmoji(!showEmoji);
   };
 
-  const handleEmojiClick = (event, emojiObject) => {
+  const handleEmojiClick = (event) => {
     let message = msg;
     message += event.emoji;
     setMsg(message);
-    // console.log(emojiObject, "yui", message, "oo", event)
   };
 
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       socket.emit("stopTyping", false);
     }
+    if (emojiClick.current) {
+      setShowEmoji(false);
+    }
   };
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
-    // return () => {
-    //     document.removeEventListener('click', handleClickOutside);
-    // };
   }, []);
 
   return (
     <div className="chatInput-container">
-      {showEmoji && (
+      {showEmoji ? (
         <div className="emoji">
           <EmojiPicker
             onEmojiClick={handleEmojiClick}
             className="size"
             searchDisabled={true}
+            ref={emojiClick}
           />
         </div>
+      ) : (
+        ""
       )}
 
       <form onSubmit={sendChat} className="chat-form">
@@ -110,7 +95,6 @@ const ChatInput = ({ chatUserAvatar, socket }) => {
           type="text"
           onChange={(event) => setMsg(event.target.value)}
           value={msg}
-          // defaultValue={msg}
           onKeyDown={handleTyping}
           onClick={stopTyping}
           ref={ref}
