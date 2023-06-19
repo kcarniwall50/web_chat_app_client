@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import "./contact.css";
 import axios from "axios";
 import { FaUsers } from "react-icons/fa";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const backend_url = process.env.REACT_APP_BACKEND_URL;
 
 const Contact = ({ setChatUserAvatar }) => {
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState("");
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const users = async () => {
@@ -27,6 +30,10 @@ const Contact = ({ setChatUserAvatar }) => {
   const imageClickHandler = (user) => {
     setChatUserAvatar(user);
   };
+
+const setAvatar = ()=>{
+  navigate('/setAvatar')
+}
 
   return (
     <div className="contact-container">
@@ -48,8 +55,8 @@ const Contact = ({ setChatUserAvatar }) => {
         ))}
       </div>
 
-      <div className="currentUser-icon">
-        <img src={currentUser?.avatar}  alt='' />
+      <div className="currentUser-icon" >
+        <img  target="_blank"  onClick={setAvatar } src={currentUser?.avatar}  alt='' style={{cursor:'pointer'}}  />
         <p>{currentUser?.name}</p>
       </div>
     </div>

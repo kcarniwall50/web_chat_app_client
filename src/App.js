@@ -13,7 +13,7 @@ import ResetPass from "./pages/ResetPassword/ResetPass";
 import { useSelector } from "react-redux";
 
 function App() {
-  if (process.env.REACT_APP_NODE_ENV === "development") {
+  if (process.env.REACT_APP_NODE_ENV !== "development") {
     console.log = function () {};
   }
 

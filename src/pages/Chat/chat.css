@@ -2,3 +2,10 @@
   display: grid;
   grid-template-columns: 1fr 4fr;
 }
+
+
+@media screen and (max-width: 500px) {
+.chat-container{
+  grid-template-columns: 1.3fr 3.7fr;
+}
+}

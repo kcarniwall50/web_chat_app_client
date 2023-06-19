@@ -5,34 +5,36 @@
   overflow: auto;
 }
 
+.date-up {
+  color: white;
+  padding: 0.1rem;
+  background-color: #d5cabd;
+  margin: 0.5rem;
+}
+
 .chat-messages {
   padding: 1rem 2rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.8rem;
 }
 
-.your-message{
-
-  
-    width: 100%;
-    display: flex;
-    justify-content:flex-start;
-    font-size:9px;
-    margin: 0.2rem;
-    color:blue;
-
+.your-message {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 9px;
+  margin: 0.2rem;
+  color: blue;
 }
 
-.others-message{
-  
-    width: 100%;
-    display: flex;
-    justify-content:flex-end;
-    font-size:8px;
-    padding: 0.2rem;
-    color: grey;
-
+.others-message {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 8px;
+  padding: 0 0.1rem;
+  color: grey;
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -51,21 +53,18 @@
 }
 
 .content {
-  max-width: 60%;
+  max-width: 70%;
   overflow-wrap: break-word;
   padding: 0.1rem;
   font-size: 1rem;
   border-radius: 0.3rem;
-
-  @media screen and (min-width: 720px) and (max-width: 1080px) {
-    max-width: 70%;
-  }
+  text-align: start;
 }
 
 .text {
   padding: 0.1rem;
-  margin: 0.1rem;
-  font-size: 1.1rem;
+  margin: 0 0.1rem;
+  font-size: 1rem;
 }
 
 .sended {
@@ -83,8 +82,26 @@
   background-color: rgba(196, 201, 248, 0.734);
 }
 
-@media screen and (max-width:500px) {
-   .chat-messages{
-    font-size: 14px;
-   }
+@media screen and (max-width: 700px) {
+  .chat-messages {
+    font-size: 19px;
+
+    padding: 0rem 0.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .content {
+    max-width: 80%;
+    padding: 0.1rem;
+    font-size: 5rem;
+  }
+
+  .date-up {
+    display: block;
+    width: fit-content;
+    margin-inline: auto;
+    margin-bottom: 1rem;
+  }
 }

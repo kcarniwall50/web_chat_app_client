@@ -5,12 +5,12 @@ import EmojiPicker from "emoji-picker-react";
 import { FaSmile } from "react-icons/fa";
 import { toast } from "react-toastify";
 
-
 const ChatInput = ({ socket }) => {
   const [showEmoji, setShowEmoji] = useState(false);
   const [msg, setMsg] = useState("");
   const ref = useRef();
   const emojiClick = useRef();
+  const emojiSmile = useRef();
 
   const handleTyping = () => {
     const typer = {
@@ -40,11 +40,6 @@ const ChatInput = ({ socket }) => {
       senderName: JSON.parse(localStorage.getItem("loginUserName")),
     };
     socket.emit("message", messages);
-
-  };
-
-  const smileEmoji = () => {
-    setShowEmoji(!showEmoji);
   };
 
   const handleEmojiClick = (event) => {
@@ -57,7 +52,16 @@ const ChatInput = ({ socket }) => {
     if (ref.current && !ref.current.contains(event.target)) {
       socket.emit("stopTyping", false);
     }
-    if (emojiClick.current) {
+
+    if (emojiSmile.current?.contains(event.target)) {
+      return setShowEmoji((prev) => !prev);
+    }
+
+    if (emojiClick.current?.contains(event.target)) {
+      setShowEmoji(true);
+    }
+
+    if (!emojiClick.current?.contains(event.target)) {
       setShowEmoji(false);
     }
   };
@@ -68,26 +72,26 @@ const ChatInput = ({ socket }) => {
 
   return (
     <div className="chatInput-container">
-      {showEmoji ? (
-        <div className="emoji">
-          <EmojiPicker
-            onEmojiClick={handleEmojiClick}
-            className="size"
-            searchDisabled={true}
-            ref={emojiClick}
-          />
-        </div>
-      ) : (
-        ""
-      )}
+      <div className="picker-container">
+        {showEmoji ? (
+          <div className="emoji" ref={emojiClick}>
+            <EmojiPicker
+              onEmojiClick={handleEmojiClick}
+              className="size"
+              searchDisabled={true}
+              width="70vw"
+              height="61vh"
+            />
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
 
       <form onSubmit={sendChat} className="chat-form">
-        <FaSmile
-          className="emoji-smile"
-          size="40"
-          color="yellow"
-          onClick={smileEmoji}
-        />
+        <span className="emoji-smile" ref={emojiSmile}>
+          <FaSmile size="30" color="yellow" />
+        </span>
 
         <input
           className="input-message"
@@ -101,7 +105,7 @@ const ChatInput = ({ socket }) => {
         />
 
         <button type="submit" className="input-message">
-          <BiSend size="35" color="blue" />
+          <BiSend size="25" color="blue" />
         </button>
       </form>
     </div>

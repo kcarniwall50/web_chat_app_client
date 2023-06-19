@@ -61,16 +61,7 @@ const ChatContent = ({ setTypingStatus }) => {
 
   return (
     <div className="chat-content-conatiner">
-      <span
-        style={{
-          color: "white",
-          padding: "0.1rem ",
-          backgroundColor: "#D5CABD",
-          margin: "0.5rem",
-        }}
-      >
-        {formatDateFromTimestamp(date)}
-      </span>
+      <span className="date-up">{formatDateFromTimestamp(date)}</span>
       <div className="chat-messages">
         {receivedMessage?.map((message, index) => (
           <div key={index} ref={scrollNew}>
@@ -84,10 +75,10 @@ const ChatContent = ({ setTypingStatus }) => {
                   marginInline: "auto",
                   padding: "0.2rem",
                   borderRadius: "4px",
-                  
                 }}
               >
-                {message}&nbsp;{<small style={{fontSize:'8px'}} >{time()}</small>}
+                {message}&nbsp;
+                {<small style={{ fontSize: "8px" }}>{time()}</small>}
               </p>
             ) : (
               <div
